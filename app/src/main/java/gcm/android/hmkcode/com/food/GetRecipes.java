@@ -3,6 +3,8 @@ package gcm.android.hmkcode.com.food;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,10 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -25,53 +29,58 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class Chicken extends ListActivity {
+public class GetRecipes extends ListActivity {
 
     private ProgressDialog pDialog;
-    JSONArray contacts = null;
-    ArrayList<HashMap<String, String>> contactList;
-    ArrayList<String> imageURLS = new ArrayList<String>();
-    int time = 60;
+    public String api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=";
+    public int numberOfRecipes = 100;
+    public JSONArray recipeList = null;
+    public ArrayList<HashMap<String, String>> recipes;
+    public ArrayList<String> imageURLS = new ArrayList<String>();
+    public String foodType;
+    public int time = 60;
+    public Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chicken);
 
-        contactList = new ArrayList<HashMap<String, String>>();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            foodType = extras.getString("id");
+            recipes = new ArrayList<HashMap<String, String>>();
+            ListView lv = getListView();
 
-        ListView lv = getListView();
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    // getting values from selected ListItem
+                    String ids = ((TextView) view.findViewById(R.id.name)).getText().toString();
+                    String title = ((TextView) view.findViewById(R.id.email)).getText().toString();
+                    String readyIn = ((TextView) view.findViewById(R.id.mobile)).getText().toString();
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                // getting values from selected ListItem
-                String ids = ((TextView) view.findViewById(R.id.name))
-                        .getText().toString();
-                String title = ((TextView) view.findViewById(R.id.email))
-                        .getText().toString();
-                String readyIn = ((TextView) view.findViewById(R.id.mobile))
-                        .getText().toString();
+                    Intent in = new Intent(getApplicationContext(), SelectedRecipe.class);
+                    in.putExtra("id", ids);
+                    in.putExtra("title", title);
+                    in.putExtra("ready", readyIn);
+                    in.putExtra("link", imageURLS.get(position));
+                    startActivity(in);
 
-                Intent in = new Intent(getApplicationContext(),
-                    SelectedRecipe.class);
-                in.putExtra("id", ids);
-                in.putExtra("title", title);
-                in.putExtra("ready", readyIn);
-                in.putExtra("link",imageURLS.get(position));
-                startActivity(in);
+                }
+            });
 
-            }
-        });
-
-        // Calling async task to get json
-        new GetRecipe().execute();
+            // Calling async task to get json
+            new GetRecipe().execute();
+        }
     }
 
 
@@ -103,7 +112,7 @@ public class Chicken extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(Chicken.this);
+            pDialog = new ProgressDialog(GetRecipes.this);
             pDialog.setMessage("Getting Recipes! ....");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -114,7 +123,7 @@ public class Chicken extends ListActivity {
         protected Void doInBackground(Void... arg0) {
             JSONObject jsonObj = null;
             HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httppost = new HttpGet("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=chicken&number=100&limitLicense=true");
+            HttpGet httppost = new HttpGet(""+api+ "" + foodType + "&number=" + numberOfRecipes + "&limitLicense=true");
             httppost.setHeader("X-Mashape-Authorization", "5VSMYMsFj4msh0QQAjh7CCxfTaQqp1WVtbmjsnGgPs5B2mmY5k");
 
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -131,13 +140,13 @@ public class Chicken extends ListActivity {
 
 
                     // Getting JSON Array node
-                    contacts = jsonObj.getJSONArray("results");
+                    recipeList = jsonObj.getJSONArray("results");
 
                     // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        JSONObject c = contacts.getJSONObject(i);
+                    for (int i = 0; i < recipeList.length(); i++) {
+                        JSONObject c = recipeList.getJSONObject(i);
                         try {
-                           int t = Integer.parseInt(c.getString("readyInMinutes"));
+                            int t = Integer.parseInt(c.getString("readyInMinutes"));
 
                             if(t<=time) {
                                 String id = c.getString("id");
@@ -154,7 +163,7 @@ public class Chicken extends ListActivity {
                                 contact.put("readyInMinutes", ready);
 
                                 // adding contact to contact list
-                                contactList.add(contact);
+                                recipes.add(contact);
                             }
 
                         }catch (Exception e){e.printStackTrace(); System.out.println("ohh dear...");}
@@ -180,7 +189,7 @@ public class Chicken extends ListActivity {
              * Updating parsed JSON data into ListView
              * */
             ListAdapter adapter = new SimpleAdapter(
-                    Chicken.this, contactList,
+                    GetRecipes.this, recipes,
                     R.layout.list_item, new String[] { "id", "title",
                     "readyInMinutes" }, new int[] { R.id.name,
                     R.id.email, R.id.mobile });
@@ -189,4 +198,5 @@ public class Chicken extends ListActivity {
         }
 
     }
+
 }

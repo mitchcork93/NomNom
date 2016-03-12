@@ -7,36 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
-import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -48,7 +22,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,23 +45,26 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void Instructions(View v){
-        Intent intent = new Intent(getBaseContext(), Instructions.class);
-        intent.putExtra("id", "632342");
-        startActivity(intent);
-    }
-
     public void askQuestion(View v){
         Intent intent = new Intent(getBaseContext(), Question.class);
         startActivity(intent);
     }
 
     public void getChicken(View v){
-        Intent intent = new Intent(getBaseContext(), Chicken.class);
+        Intent intent = new Intent(getBaseContext(), GetRecipes.class);
+        intent.putExtra("id","chicken");
         startActivity(intent);
     }
 
-    public void getFish(View v){
+    public void getSteak(View v){
+        Intent intent = new Intent(getBaseContext(), GetRecipes.class);
+        intent.putExtra("id","steak");
+        startActivity(intent);
+    }
 
+    public void getVeg(View v){
+        Intent intent = new Intent(getBaseContext(), GetRecipes.class);
+        intent.putExtra("id","vegetable");
+        startActivity(intent);
     }
 }

@@ -8,5 +8,6 @@
     <string name="title_activity_question">Question</string>
     <string name="title_activity_chicken">Chicken</string>
     <string name="title_activity_selected_recipe">SelectedRecipe</string>
+    <string name="title_activity_get_recipes">GetRecipes</string>
 
 </resources>

@@ -1,0 +1,5 @@
+C:\Users\mitch\AndroidStudioProjects\Food\app\build\intermediates\classes\release
+C:\Users\mitch\AndroidStudioProjects\Food\app\build\intermediates\pre-dexed\release\support-annotations-21.0.3-92b7620618c4433c084ff76fa89ee0b3c20eae5c.jar
+C:\Users\mitch\AndroidStudioProjects\Food\app\build\intermediates\pre-dexed\release\internal_impl-21.0.3-0d8243097b192a3f5895e222fb7850bf3e719f01.jar
+C:\Users\mitch\AndroidStudioProjects\Food\app\build\intermediates\pre-dexed\release\classes-b9c44f2d8ae9937c886f03e5106ba00251e569a0.jar
+C:\Users\mitch\AndroidStudioProjects\Food\app\build\intermediates\pre-dexed\release\classes-8b754861817428bc2629686c5def986a3d05edfc.jar

@@ -18,15 +18,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: gcm.android.hmkcode.com.food" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb5e28bb-8b98-4284-a1a7-d217d38cd1d2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/GetRecipes.java" afterPath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/GetRecipes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/gcm/android/hmkcode/com/food/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/gcm/android/hmkcode/com/food/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/SelectedRecipe.java" afterPath="$PROJECT_DIR$/app/src/main/java/gcm/android/hmkcode/com/food/SelectedRecipe.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_selected_recipe.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_selected_recipe.xml" />
+    <list default="true" id="fb5e28bb-8b98-4284-a1a7-d217d38cd1d2" name="Default" comment="VERSION 0.91">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Food.iws" />
@@ -1130,7 +1122,11 @@
       <created>1457810826366</created>
       <updated>1457810826366</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="VERSION 0.91">
+      <created>1457971421287</created>
+      <updated>1457971421287</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1217,7 +1213,8 @@
     <MESSAGE value="VERSION 0.5" />
     <MESSAGE value="VERSION 0.8" />
     <MESSAGE value="VERSION 0.9" />
-    <option name="LAST_COMMIT_MESSAGE" value="VERSION 0.9" />
+    <MESSAGE value="VERSION 0.91" />
+    <option name="LAST_COMMIT_MESSAGE" value="VERSION 0.91" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

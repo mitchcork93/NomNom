@@ -38,17 +38,23 @@ public class SelectedRecipe extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
 
-            Pattern p = Pattern.compile("\"([^\"]*)\"");
-            Matcher m = p.matcher(extras.getString("link"));
-            while (m.find()) {
-                imageLink="https://spoonacular.com/recipeImages/"+ m.group(1);
+            String link = extras.getString("link");
+
+            if(link.substring(0,4).equalsIgnoreCase("http"))
+            {
+                imageLink = link;
             }
+            else
+            {
+                imageLink = "https://spoonacular.com/recipeImages/" + link;
+            }
+
             recipe = new Recipe(extras.getString("id"),extras.getString("title"),extras.getString("ready"),SelectedRecipe.this,imageLink);
             TextView title =(TextView)findViewById(R.id.title);
             TextView ready =(TextView)findViewById(R.id.time);
             title.setText(recipe.getTitle());
             ready.setText("Ready in: " + recipe.getTime() + " minutes!");
-            System.out.println(extras.getString("link"));
+            System.out.println("image: " + extras.getString("link"));
 
             recipe.getInstructions();
             recipe.getImage();

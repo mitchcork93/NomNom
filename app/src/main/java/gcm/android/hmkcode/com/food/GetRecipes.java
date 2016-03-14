@@ -38,9 +38,10 @@ import java.util.HashMap;
 public class GetRecipes extends ListActivity {
 
     private ProgressDialog pDialog;
-    public String api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query=";
+    public String api;
     public int numberOfRecipes = 100;
     public JSONArray recipeList = null;
+    public String responseBody;
     public ArrayList<HashMap<String, String>> recipes;
     public ArrayList<String> imageURLS = new ArrayList<String>();
     public String foodType;
@@ -50,13 +51,23 @@ public class GetRecipes extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chicken);
+        setContentView(R.layout.activity_get_recipes);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            foodType = extras.getString("id");
+            if(extras.getString("ingredients") != null)
+            {
+                String list = extras.getString("ingredients");
+                System.out.println(list);
+                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=" + list + "&limitLicense=true";
+            }
+            else {
+                foodType = extras.getString("id");
+                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="+ foodType + "&number=" + numberOfRecipes + "&limitLicense=true";
+            }
             recipes = new ArrayList<HashMap<String, String>>();
             ListView lv = getListView();
+
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -87,7 +98,7 @@ public class GetRecipes extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chicken, menu);
+        getMenuInflater().inflate(R.menu.menu_get_recipes, menu);
         return true;
     }
 
@@ -123,12 +134,12 @@ public class GetRecipes extends ListActivity {
         protected Void doInBackground(Void... arg0) {
             JSONObject jsonObj = null;
             HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httppost = new HttpGet(""+api+ "" + foodType + "&number=" + numberOfRecipes + "&limitLicense=true");
+            HttpGet httppost = new HttpGet(api);
             httppost.setHeader("X-Mashape-Authorization", "5VSMYMsFj4msh0QQAjh7CCxfTaQqp1WVtbmjsnGgPs5B2mmY5k");
 
             ResponseHandler<String> responseHandler = new BasicResponseHandler();
             try {
-                String responseBody = httpclient.execute(httppost, responseHandler);
+                responseBody = httpclient.execute(httppost, responseHandler);
                 jsonObj = new JSONObject(responseBody);
 
             }catch (Exception e){e.printStackTrace();}
@@ -137,8 +148,6 @@ public class GetRecipes extends ListActivity {
 
             if (jsonObj != null) {
                 try {
-
-
                     // Getting JSON Array node
                     recipeList = jsonObj.getJSONArray("results");
 
@@ -148,23 +157,21 @@ public class GetRecipes extends ListActivity {
                         try {
                             int t = Integer.parseInt(c.getString("readyInMinutes"));
 
-                            if(t<=time) {
-                                String id = c.getString("id");
-                                String name = c.getString("title");
-                                String ready = c.getString("readyInMinutes");
-                                imageURLS.add(c.getString("imageUrls"));
+                             String id = c.getString("id");
+                             String name = c.getString("title");
+                             String ready = c.getString("readyInMinutes");
+                             imageURLS.add(c.getString("image"));
 
                                 // tmp hashmap for single contact
-                                HashMap<String, String> contact = new HashMap<String, String>();
+                             HashMap<String, String> contact = new HashMap<String, String>();
 
                                 // adding each child node to HashMap key => value
-                                contact.put("id", id);
-                                contact.put("title", name);
-                                contact.put("readyInMinutes", ready);
+                             contact.put("id", id);
+                             contact.put("title", name);
+                             contact.put("readyInMinutes", ready);
 
                                 // adding contact to contact list
-                                recipes.add(contact);
-                            }
+                             recipes.add(contact);
 
                         }catch (Exception e){e.printStackTrace(); System.out.println("ohh dear...");}
 
@@ -173,6 +180,30 @@ public class GetRecipes extends ListActivity {
                     e.printStackTrace();
                 }
             } else {
+                try {
+                    recipeList = new JSONArray(responseBody);
+
+                    for (int i = 0; i < recipeList.length(); i++) {
+                        JSONObject c = recipeList.getJSONObject(i);
+
+                            String id = c.getString("id");
+                            String name = c.getString("title");
+                            imageURLS.add(c.getString("image"));
+
+                            // tmp hashmap for single contact
+                            HashMap<String, String> contact = new HashMap<String, String>();
+
+                            // adding each child node to HashMap key => value
+                            contact.put("id", id);
+                            contact.put("title", name);
+                            contact.put("readyInMinutes", "10");
+
+                            // adding contact to contact list
+                            recipes.add(contact);
+
+                        }
+
+                }catch (Exception e){e.printStackTrace();}
                 Log.e("ServiceHandler", "Couldn't get any data from the url");
             }
 

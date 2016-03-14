@@ -10,7 +10,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import android.content.Intent;
-
+import android.widget.EditText;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -67,4 +67,12 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra("id","vegetable");
         startActivity(intent);
     }
+
+    public void findByIngredients(View v){
+        Intent intent = new Intent(getBaseContext(), GetRecipes.class);
+        EditText input = (EditText)findViewById(R.id.ingredients);
+        intent.putExtra("ingredients",input.getText().toString());
+        startActivity(intent);
+    }
+
 }

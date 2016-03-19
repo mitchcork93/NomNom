@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-
-    <item android:id="@+id/my_action"
-    android:icon="@drawable/ic_action_edit"
-    android:title="My Action"
-    app:showAsAction="ifRoom|collapseActionView"
-    android:actionLayout="@layout/search_action" />
-
+    <item
+        android:id="@+id/action_question"
+        android:icon="@drawable/question_image"
+        android:title="Question"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/veggie_pressed"
+        android:state_pressed="true" />
+    <item android:drawable="@drawable/veggie" />
+</selector><!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/drawable/veggie_selector.xml -->

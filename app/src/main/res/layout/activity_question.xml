@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Ask A Question"
+        android:text="Answer"
         android:id="@+id/question"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -20,39 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Question:"
-        android:id="@+id/q"
-        android:layout_below="@+id/question"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="77dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/typedQuestion"
-        android:layout_alignBottom="@+id/q"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/question" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Answer"
-        android:id="@+id/getanswer"
-        android:layout_below="@+id/typedQuestion"
-        android:layout_toEndOf="@+id/q"
-        android:layout_marginTop="39dp"
-        android:onClick="getAnswer"
-        android:nestedScrollingEnabled="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Answer"
+        android:text="Large Text"
         android:id="@+id/answer"
-        android:layout_below="@+id/getanswer"
-        android:layout_alignStart="@+id/typedQuestion"
-        android:layout_marginTop="72dp"
-        android:layout_alignEnd="@+id/question" />
+        android:layout_below="@+id/question"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp" />
+
 </RelativeLayout>

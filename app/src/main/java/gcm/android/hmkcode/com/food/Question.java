@@ -30,18 +30,15 @@ public class Question extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-    }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String unFilteredQuestion = extras.getString("question");
+            question = unFilteredQuestion.replaceAll("\\s+", "%20");
+            System.out.println(question);
+            new query().execute();
+        }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public String getQuestion(){
-        return question;
     }
 
     @Override
@@ -64,14 +61,6 @@ public class Question extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void getAnswer(View v){
-
-        TextView q = (TextView)findViewById(R.id.typedQuestion);
-        String unFilteredQuestion = q.getText().toString();
-        question = unFilteredQuestion.replaceAll("\\s+","%20");
-        new query().execute();
     }
 
     private class query extends AsyncTask<Void, Void, Void> {

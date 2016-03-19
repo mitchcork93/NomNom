@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/chicken"
-        android:background="@drawable/chicken_image"
+        android:background="@drawable/chicken"
         android:bottomLeftRadius="50dp"
         android:topLeftRadius="50dp"
         android:topRightRadius="50dp"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/steak"
-        android:background="@drawable/meat_image"
+        android:background="@drawable/red_meat_selector"
         android:layout_alignTop="@+id/chicken"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -37,43 +37,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/vegetable"
-        android:background="@drawable/veggie_image"
+        android:background="@drawable/veggie_selector"
         android:onClick="getVeg"
         android:layout_above="@+id/textView2"
         android:layout_centerHorizontal="true" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton4"
-        android:background="@drawable/junk_image"
+        android:id="@+id/burger"
+        android:onClick="getJunk"
+        android:background="@drawable/burger_selector"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton5"
-        android:background="@drawable/stopwatch_10b"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton6"
-        android:background="@drawable/stopwatch_20b"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/grain"
+        android:onClick="getGrain"
+        android:background="@drawable/grain_selector"
+        android:layout_alignTop="@+id/seafood"
         android:layout_alignStart="@+id/textView2" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton7"
-        android:background="@drawable/stopwatch_45b"
-        android:layout_alignBottom="@+id/imageButton5"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:id="@+id/seafood"
+        android:onClick="getFish"
+        android:background="@drawable/seafood_selector"
+        android:layout_alignTop="@+id/burger"
+        android:layout_alignEnd="@+id/button2" />
     <TextView
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -120,7 +111,7 @@
         android:textStyle="bold"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageButton4"
+        android:layout_below="@+id/burger"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
 
@@ -130,8 +121,8 @@
         android:text="Ask Question"
         android:id="@+id/button"
         android:onClick="askQuestion"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/burger"
+        android:layout_toStartOf="@+id/burger" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -147,18 +138,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ingredients"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/vegetable" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginBottom="46dp"
+        android:layout_alignEnd="@+id/textView6" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Find Recipes"
         android:id="@+id/button2"
-        android:layout_below="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:onClick="findByIngredients" />
+        android:onClick="findByIngredients"
+        android:layout_alignBottom="@+id/ingredients"
+        android:layout_toEndOf="@+id/vegetable" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grains"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seafood"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/seafood"
+        android:layout_alignStart="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find by Ingredients"
+        android:id="@+id/textView8"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_above="@+id/button2"
+        android:layout_toEndOf="@+id/textView4" />
 
 </RelativeLayout>
 <!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/layout/activity_main.xml -->

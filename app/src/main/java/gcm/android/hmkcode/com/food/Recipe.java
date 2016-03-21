@@ -93,10 +93,10 @@ public class Recipe {
     }
 
     public void getInstructions(){
-        new getInstruct().execute();
+        new Instructions().execute();
     }
 
-    private class getInstruct extends AsyncTask<Void, Void, Void> {
+    private class Instructions extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {

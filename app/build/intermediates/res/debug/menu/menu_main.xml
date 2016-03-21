@@ -6,7 +6,7 @@
     <item
         android:id="@+id/action_question"
         android:icon="@drawable/question_image"
-        android:title="Question"
+        android:title="@string/ask_question"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
 </menu><!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/menu/menu_main.xml -->

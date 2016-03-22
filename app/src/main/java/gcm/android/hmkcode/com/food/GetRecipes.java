@@ -38,6 +38,7 @@ import java.util.HashMap;
 public class GetRecipes extends ListActivity {
 
     private ProgressDialog pDialog;
+    public Recipe selectedRecipe;
     public String api;
     public int numberOfRecipes = 100;
     public JSONArray recipeList = null;
@@ -79,12 +80,9 @@ public class GetRecipes extends ListActivity {
                     String title = ((TextView) view.findViewById(R.id.email)).getText().toString();
                     String readyIn = ((TextView) view.findViewById(R.id.mobile)).getText().toString();
 
-                    Intent in = new Intent(getApplicationContext(), SelectedRecipe.class);
-                    in.putExtra("id", ids);
-                    in.putExtra("title", title);
-                    in.putExtra("ready", readyIn);
-                    in.putExtra("link", imageURLS.get(position));
-                    startActivity(in);
+                    selectedRecipe = new Recipe(ids,title,readyIn,null,imageURLS.get(position));
+
+                    new Instructions().execute();
 
                 }
             });
@@ -226,6 +224,67 @@ public class GetRecipes extends ListActivity {
                     R.id.email, R.id.mobile });
 
             setListAdapter(adapter);
+        }
+
+    }
+
+    private class Instructions extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(GetRecipes.this);
+            pDialog.setMessage("Getting instructions....");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            // Creating service handler class instance
+            JSONObject jsonStr = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httppost = new HttpGet("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + selectedRecipe.getId() + "/information");
+            httppost.setHeader("X-Mashape-Authorization", "5VSMYMsFj4msh0QQAjh7CCxfTaQqp1WVtbmjsnGgPs5B2mmY5k");
+
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            try {
+                String responseBody = httpclient.execute(httppost, responseHandler);
+                jsonStr = new JSONObject(responseBody);
+
+            }catch (Exception e){e.printStackTrace();}
+
+            Log.d("Response: ", "> " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    selectedRecipe.setInstructions(jsonStr.getString("instructions"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            Intent in = new Intent(getApplicationContext(), SelectedRecipe.class);
+            in.putExtra("id", selectedRecipe.getId());
+            in.putExtra("title", selectedRecipe.getTitle());
+            in.putExtra("ready", selectedRecipe.getTime());
+            in.putExtra("link", selectedRecipe.getImageLink());
+            in.putExtra("instructions",selectedRecipe.getInstructions());
+            startActivity(in);
         }
 
     }

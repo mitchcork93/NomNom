@@ -6,9 +6,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by mitch on 11/03/2016.
  */
-public class Recipe {
+public class Recipe{
 
     private String id;
     private String title;
@@ -40,8 +43,6 @@ public class Recipe {
     public ProgressDialog pDialog;
     public Bitmap bitmap;
    // private ArrayList<String> ingredients;
-
-    Recipe(){}
 
     public Recipe(String id, String title, String time, Activity source,String link)
     {
@@ -72,6 +73,10 @@ public class Recipe {
         this.imageLink=link;
     }
 
+    public void setInstructions(String instructions){
+        this.instructions=instructions;
+    }
+
     public String getTitle(){
         return title;
     }
@@ -88,68 +93,10 @@ public class Recipe {
         return imageLink;
     }
 
+    public String getInstructions(){ return instructions; }
+
     public void getImage(){
         new GetImage().execute(getImageLink());
-    }
-
-    public void getInstructions(){
-        new Instructions().execute();
-    }
-
-    private class Instructions extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(source);
-            pDialog.setMessage("Getting instructions....");
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            // Creating service handler class instance
-            JSONObject jsonStr = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httppost = new HttpGet("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + getId() + "/information");
-            httppost.setHeader("X-Mashape-Authorization", "5VSMYMsFj4msh0QQAjh7CCxfTaQqp1WVtbmjsnGgPs5B2mmY5k");
-
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
-            try {
-                String responseBody = httpclient.execute(httppost, responseHandler);
-                jsonStr = new JSONObject(responseBody);
-
-            }catch (Exception e){e.printStackTrace();}
-
-            Log.d("Response: ", "> " + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    instructions = jsonStr.getString("instructions");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.e("ServiceHandler", "Couldn't get any data from the url");
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-
-            TextView instructionText = (TextView)source.findViewById(R.id.instructions);
-            instructionText.setText(Html.fromHtml(instructions));
-        }
-
     }
 
     private class GetImage extends AsyncTask<String, String, Bitmap> {

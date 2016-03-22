@@ -1,64 +1,61 @@
 package gcm.android.hmkcode.com.food;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class SelectedRecipe extends ActionBarActivity {
 
     private Recipe recipe;
+    public ProgressDialog pDialog;
+    public FragmentTabHost mTabHost;
     String imageLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_recipe);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("NomNom");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
             String link = extras.getString("link");
 
-            if(link.substring(0,4).equalsIgnoreCase("http"))
-            {
+            if (link.substring(0, 4).equalsIgnoreCase("http"))
                 imageLink = link;
-            }
             else
-            {
                 imageLink = "https://spoonacular.com/recipeImages/" + link;
-            }
 
-            recipe = new Recipe(extras.getString("id"),extras.getString("title"),extras.getString("ready"),SelectedRecipe.this,imageLink);
-            TextView title =(TextView)findViewById(R.id.title);
-            TextView ready =(TextView)findViewById(R.id.time);
-            title.setText(recipe.getTitle());
-            ready.setText("Ready in: " + recipe.getTime() + " minutes!");
-            System.out.println("image: " + extras.getString("link"));
-
-            recipe.getInstructions();
+            recipe = new Recipe(extras.getString("id"), extras.getString("title"), extras.getString("ready"), SelectedRecipe.this, imageLink);
+            recipe.setInstructions(extras.getString("instructions"));
             recipe.getImage();
         }
+
+        TextView title = (TextView)findViewById(R.id.title);
+        title.setText(recipe.getTitle());
+
+        Bundle extraText = new Bundle();
+        extraText.putString("instructions",recipe.getInstructions());
+
+        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Tab 1", null),Tab1Activity.class, extraText);
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Tab 2", null),Tab2Activity.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Tab 3", null),Tab3Activity.class, null);
+
+
     }
 
     @Override
@@ -82,9 +79,4 @@ public class SelectedRecipe extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void findInstructions(View v){
-        recipe.getInstructions();
-    }
-
 }

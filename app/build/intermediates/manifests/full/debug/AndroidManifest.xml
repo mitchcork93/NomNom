@@ -64,6 +64,27 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
+        <activity
+            android:name="gcm.android.hmkcode.com.food.Tab1Activity"
+            android:parentActivityName="gcm.android.hmkcode.com.food.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="gcm.android.hmkcode.com.food.Tab2Activity"
+            android:parentActivityName="gcm.android.hmkcode.com.food.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="gcm.android.hmkcode.com.food.Tab3Activity"
+            android:parentActivityName="gcm.android.hmkcode.com.food.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
     </application>
 
 </manifest>

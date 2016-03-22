@@ -51,9 +51,9 @@ public class SelectedRecipe extends ActionBarActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Tab 1", null),Tab1Activity.class, extraText);
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Tab 2", null),Tab2Activity.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Tab 3", null),Tab3Activity.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Instructions", null),Tab1Activity.class, extraText);
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Ingredients", null),Tab2Activity.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Nutrition", null),Tab3Activity.class, null);
 
 
     }

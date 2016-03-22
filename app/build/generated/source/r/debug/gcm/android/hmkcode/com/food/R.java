@@ -1371,8 +1371,8 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f08002e;
         public static final int action_mode_bar_stub=0x7f08002d;
         public static final int action_mode_close_button=0x7f080020;
-        public static final int action_question=0x7f080061;
-        public static final int action_settings=0x7f080060;
+        public static final int action_question=0x7f080063;
+        public static final int action_settings=0x7f080062;
         public static final int activity_chooser_view_content=0x7f080021;
         public static final int always=0x7f080016;
         public static final int answer=0x7f080053;
@@ -1383,14 +1383,14 @@ containing a value of this type.
         public static final int checkbox=0x7f080029;
         public static final int chicken=0x7f080040;
         public static final int collapseActionView=0x7f080017;
-        public static final int cookingInstructions=0x7f08005f;
+        public static final int cookingInstructions=0x7f080060;
         public static final int decor_content_parent=0x7f08002f;
         public static final int default_activity_button=0x7f080024;
         public static final int dialog=0x7f08001b;
         public static final int disableHome=0x7f08000c;
         public static final int dropdown=0x7f08001c;
         public static final int edit_query=0x7f080033;
-        public static final int email=0x7f08005a;
+        public static final int email=0x7f08005b;
         public static final int end=0x7f080014;
         public static final int expand_activities_button=0x7f080022;
         public static final int expanded_menu=0x7f080028;
@@ -1402,15 +1402,16 @@ containing a value of this type.
         public static final int image=0x7f080023;
         public static final int imageView=0x7f080055;
         public static final int ingredients=0x7f08004d;
+        public static final int ingredientsList=0x7f080061;
         public static final int instruct=0x7f080054;
         public static final int layout=0x7f080051;
         public static final int listMode=0x7f080009;
         public static final int list_item=0x7f080025;
         public static final int main=0x7f08003f;
         public static final int middle=0x7f080015;
-        public static final int mobile=0x7f08005b;
-        public static final int myActionEditText=0x7f08005d;
-        public static final int myActionTextView=0x7f08005c;
+        public static final int mobile=0x7f08005c;
+        public static final int myActionEditText=0x7f08005e;
+        public static final int myActionTextView=0x7f08005d;
         public static final int name=0x7f080059;
         public static final int never=0x7f080019;
         public static final int none=0x7f08000e;
@@ -1419,7 +1420,8 @@ containing a value of this type.
         public static final int progress_horizontal=0x7f080006;
         public static final int question=0x7f080052;
         public static final int radio=0x7f08002b;
-        public static final int scrollView=0x7f08005e;
+        public static final int radioButton=0x7f08005a;
+        public static final int scrollView=0x7f08005f;
         public static final int seafood=0x7f080046;
         public static final int search_badge=0x7f080035;
         public static final int search_bar=0x7f080034;
@@ -1488,10 +1490,12 @@ containing a value of this type.
         public static final int activity_main=0x7f030018;
         public static final int activity_question=0x7f030019;
         public static final int activity_selected_recipe=0x7f03001a;
-        public static final int list_item=0x7f03001b;
-        public static final int search_action=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
-        public static final int tab_one=0x7f03001e;
+        public static final int ingredients_list=0x7f03001b;
+        public static final int list_item=0x7f03001c;
+        public static final int search_action=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int tab_one=0x7f03001f;
+        public static final int tab_two=0x7f030020;
     }
     public static final class menu {
         public static final int menu_get_recipes=0x7f0c0000;

@@ -16,6 +16,10 @@ public class SelectedRecipe extends ActionBarActivity {
     private Recipe recipe;
     public ProgressDialog pDialog;
     public FragmentTabHost mTabHost;
+    public String ingredients;
+    public String nutrients;
+    public String amount;
+    public String units;
     String imageLink;
 
     @Override
@@ -37,6 +41,15 @@ public class SelectedRecipe extends ActionBarActivity {
             else
                 imageLink = "https://spoonacular.com/recipeImages/" + link;
 
+            ingredients = extras.getString("ingredients");
+            nutrients = extras.getString("nutrients");
+            amount = extras.getString("amount");
+            units = extras.getString("units");
+
+            System.out.println("SELECTEDRECIPE NUT: " + nutrients);
+            System.out.println("SELECTEDRECIPE AMO: " + amount);
+            System.out.println("SELECTEDRECIPE UNI: " + units);
+
             recipe = new Recipe(extras.getString("id"), extras.getString("title"), extras.getString("ready"), SelectedRecipe.this, imageLink);
             recipe.setInstructions(extras.getString("instructions"));
             recipe.getImage();
@@ -48,12 +61,20 @@ public class SelectedRecipe extends ActionBarActivity {
         Bundle extraText = new Bundle();
         extraText.putString("instructions",recipe.getInstructions());
 
+        Bundle selectedIngredients = new Bundle();
+        selectedIngredients.putString("ingredients",ingredients);
+
+        Bundle recipeNutrients = new Bundle();
+        recipeNutrients.putString("nutrients",nutrients);
+        recipeNutrients.putString("units",units);
+        recipeNutrients.putString("amount",amount);
+
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("Instructions", null),Tab1Activity.class, extraText);
-        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("Ingredients", null),Tab2Activity.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("Nutrition", null),Tab3Activity.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("tab1").setIndicator("", getResources().getDrawable(R.drawable.recipe_tabs_selector_recipe)), Tab1Activity.class, extraText);
+        mTabHost.addTab(mTabHost.newTabSpec("tab2").setIndicator("", getResources().getDrawable(R.drawable.recipe_tabs_selector_ingredients)),Tab2Activity.class, selectedIngredients);
+        mTabHost.addTab(mTabHost.newTabSpec("tab3").setIndicator("", getResources().getDrawable(R.drawable.recipe_tabs_selector_summary)),Tab3Activity.class, recipeNutrients);
 
 
     }

@@ -1,12 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <ListView
-        android:id="@+id/ingredientsList"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-    </ListView>
+    android:orientation="vertical"
+    android:id="@+id/tab2">
 
 </LinearLayout><!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/layout/tab_two.xml -->

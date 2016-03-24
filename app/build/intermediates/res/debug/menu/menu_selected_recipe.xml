@@ -4,5 +4,12 @@
     tools:context="gcm.android.hmkcode.com.food.SelectedRecipe">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/shopping_list"
+        android:icon="@drawable/action_bar_shopping_list"
+        android:title="@string/ask_question"
+        app:showAsAction="ifRoom|collapseActionView" />
+
 </menu>
 <!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/menu/menu_selected_recipe.xml -->

@@ -38,16 +38,20 @@ import java.util.HashMap;
 public class GetRecipes extends ListActivity {
 
     private ProgressDialog pDialog;
+    public String ingredients = "";
+    public String nutrients = "";
+    public String units = "";
+    public String amount = "";
     public Recipe selectedRecipe;
     public String api;
     public int numberOfRecipes = 100;
     public JSONArray recipeList = null;
+    public JSONArray ingredientsList = null;
+    public JSONArray nutrientsList = null;
     public String responseBody;
     public ArrayList<HashMap<String, String>> recipes;
     public ArrayList<String> imageURLS = new ArrayList<String>();
     public String foodType;
-    public int time = 60;
-    public Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +86,9 @@ public class GetRecipes extends ListActivity {
 
                     selectedRecipe = new Recipe(ids,title,readyIn,null,imageURLS.get(position));
 
-                    new Instructions().execute();
+                    new Ingredients().execute();
+
+                  //  https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information
 
                 }
             });
@@ -284,9 +290,113 @@ public class GetRecipes extends ListActivity {
             in.putExtra("ready", selectedRecipe.getTime());
             in.putExtra("link", selectedRecipe.getImageLink());
             in.putExtra("instructions",selectedRecipe.getInstructions());
+            in.putExtra("ingredients",ingredients);
+            in.putExtra("nutrients",nutrients);
+            System.out.println("PUTTING: " + units);
+            in.putExtra("units",units);
+            in.putExtra("amount",amount);
             startActivity(in);
         }
 
+    }
+
+    private class Ingredients extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(GetRecipes.this);
+            pDialog.setMessage("Getting Ingredients....");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            JSONObject jsonObj = null;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httppost = new HttpGet("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + selectedRecipe.getId() + "/information?includeNutrition=true");
+            httppost.setHeader("X-Mashape-Authorization", "5VSMYMsFj4msh0QQAjh7CCxfTaQqp1WVtbmjsnGgPs5B2mmY5k");
+
+            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+            try {
+                responseBody = httpclient.execute(httppost, responseHandler);
+                jsonObj = new JSONObject(responseBody);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Log.d("Response: ", "> " + jsonObj);
+
+            if (jsonObj != null) {
+                try {
+                    // Getting JSON Array node
+                    ingredientsList = jsonObj.getJSONArray("extendedIngredients");
+                    System.out.println("Investigate: " + jsonObj.toString());
+                  //  nutrientsList = jsonObj.getJSONArray("nutrients");
+
+                    // looping through All Contacts
+                    for (int i = 0; i < ingredientsList.length(); i++) {
+                        JSONObject c = ingredientsList.getJSONObject(i);
+                        try {
+
+                            ingredients += c.getString("name") + ",";
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("ohh dear...");
+                        }
+                    }
+
+                        JSONObject nut = jsonObj.getJSONObject("nutrition");
+                        System.out.println("Nutlist: " + nut.toString());
+                        nutrientsList = nut.getJSONArray("nutrients");
+
+                        for(int y=0; y<nutrientsList.length(); y++)
+                        {
+                            JSONObject o = nutrientsList.getJSONObject(y);
+                            try {
+                                nutrients += o.getString("title") +",";
+                                System.out.println("ADDING: " + o.getString("unit"));
+                                String checker = o.getString("unit");
+                                if(checker.equalsIgnoreCase("Âµg"))
+                                    units += "µg" + ",";
+                                else
+                                    units += o.getString("unit") + ",";
+                                amount += o.getString("amount") + ",";
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                System.out.println("ohh dear...");
+                            }
+                        }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.e("ServiceHandler", "Couldn't get any data from the url");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+            System.out.println("INGREDIENTS: " + ingredients);
+
+            new Instructions().execute();
+
+        }
     }
 
 }

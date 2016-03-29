@@ -174,7 +174,9 @@
     <string name="title_activity_get_recipes">GetRecipes</string>
     <string name="title_activity_instructions">Instructions</string>
     <string name="title_activity_question">Question</string>
+    <string name="title_activity_selected_list">SelectedList</string>
     <string name="title_activity_selected_recipe">SelectedRecipe</string>
+    <string name="title_activity_shopping_lists">ShoppingLists</string>
     <!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

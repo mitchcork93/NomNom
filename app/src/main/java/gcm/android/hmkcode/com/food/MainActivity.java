@@ -122,4 +122,9 @@ public class MainActivity extends ActionBarActivity {
         intent.putExtra("ingredients",input.getText().toString());
         startActivity(intent);
     }
+
+    public void shoppingList(View v){
+        Intent intent = new Intent(getBaseContext(), ShoppingLists.class);
+        startActivity(intent);
+    }
 }

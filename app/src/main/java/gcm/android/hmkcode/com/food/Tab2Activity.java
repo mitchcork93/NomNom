@@ -2,9 +2,13 @@ package gcm.android.hmkcode.com.food;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +16,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ListIterator;
 
 /**
@@ -69,10 +78,8 @@ public class Tab2Activity extends Fragment {
                     if (isChecked) {
                         buttonView.getTag();
                         shoppingList.add(cb.getText().toString());
-                        System.out.println("ADDING: " + cb.getText().toString());
                     } else {
                         shoppingList.remove(cb.getText().toString());
-                        System.out.println("REMOVING: " + cb.getText().toString());
                     }
 
                 }
@@ -91,14 +98,47 @@ public class Tab2Activity extends Fragment {
                 for (int x=0; x<shoppingList.size(); x++)
                     list += shoppingList.get(x) + "\n";
 
+                final EditText input = new EditText(getActivity());
+                input.setHint("Enter List Name");
                 new AlertDialog.Builder(getActivity())
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setView(input)
+                        .setIcon(R.drawable.action_bar_shopping_list)
                         .setTitle("Save List")
-                        .setMessage("Add following items to list?\n\n" + list)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setMessage("Adding following items to list\n\n" + list)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                
+                                if (input.getText().toString().equalsIgnoreCase(""))
+                                    System.out.println("no input");
+                                else {
+                                    DBhelper db = new DBhelper(getActivity());
+
+                                    Calendar c = Calendar.getInstance();
+                                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                                    String date = df.format(c.getTime());
+
+                                    long id = db.insertDataList(input.getText().toString(), date);
+                                    int listId = (int) id;
+
+                                    for (int y = 0; y < shoppingList.size(); y++)
+                                        db.insertDataItem(shoppingList.get(y), listId);
+
+                                    /* USED FOR TESTING
+                                    List test = db.getList(listId);
+                                    System.out.println("Latest List Info\nName: " + test.getName() + "\n" + "ID: " + test.getId() + "\n" + "Date: " + test.getDate());
+                                    ArrayList<Item> allItems = db.getAllItems(listId);
+                                    for(int i=0; i<allItems.size(); i++)
+                                        System.out.println("Latest Items Info\nName: " + allItems.get(i).getName() + "\n" + "ID: " + allItems.get(i).getId() + "\n" + "ListID: " + allItems.get(i).getListId());
+
+                                    ArrayList<List> allLists = db.getAllLists();
+                                    for(int i=0; i<allLists.size(); i++)
+                                        System.out.println("List " + i + "Info\nName: " + allLists.get(i).getName() + "\n" + "ID: " + allLists.get(i).getId() + "\n" + "Date: " + allLists.get(i).getDate());*/
+                                    Toast.makeText(getActivity(), "List Created!",
+                                            Toast.LENGTH_LONG).show();
+
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    startActivity(intent);
+                                }
                             }
 
                         })

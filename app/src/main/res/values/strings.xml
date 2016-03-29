@@ -10,5 +10,7 @@
     <string name="title_activity_chicken">Chicken</string>
     <string name="title_activity_selected_recipe">SelectedRecipe</string>
     <string name="title_activity_get_recipes">GetRecipes</string>
+    <string name="title_activity_shopping_lists">ShoppingLists</string>
+    <string name="title_activity_selected_list">SelectedList</string>
 
 </resources>

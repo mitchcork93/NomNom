@@ -85,6 +85,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="MainActivity" />
         </activity>
+        <activity
+            android:name="gcm.android.hmkcode.com.food.ShoppingLists"
+            android:label="@string/title_activity_shopping_lists"
+            android:parentActivityName="gcm.android.hmkcode.com.food.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+        </activity>
+        <activity
+            android:name="gcm.android.hmkcode.com.food.SelectedList"
+            android:label="@string/title_activity_selected_list"
+            android:parentActivityName="gcm.android.hmkcode.com.food.ShoppingLists" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ShoppingLists" />
+        </activity>
     </application>
 
 </manifest>

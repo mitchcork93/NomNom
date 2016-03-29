@@ -1,5 +1,6 @@
 package gcm.android.hmkcode.com.food;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,46 +17,33 @@ import java.util.ArrayList;
 
 public class SelectedList extends ActionBarActivity {
 
+    public String listName;
+    public int listId;
+    public ArrayList<Item> listItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_list);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("NomNom");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         Bundle extras = getIntent().getExtras();
 
-        //if (extras != null) {
-        String listName = extras.getString("name");
-        String filtered = extras.getString("id").replaceAll( "[^\\d]", "" );
-        int id = Integer.parseInt(filtered);
+        if (extras != null) {
+            listName = extras.getString("name");
+            String filtered = extras.getString("id").replaceAll("[^\\d]", "");
+            listId = Integer.parseInt(filtered);
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.expandableLinear);
-        TextView title = (TextView)findViewById(R.id.name);
-        title.setText(listName);
-        DBhelper db = new DBhelper(this);
+            TextView title = (TextView) findViewById(R.id.name);
+            title.setText(listName);
 
-        ArrayList<Item> items = db.getAllItems(id);
-
-        for(int i = 0; i <items.size(); i++) {
-            final CheckBox cb = new CheckBox(this);
-            cb.setText(items.get(i).getName());
-            cb.setTag("checkbox" + i);
-            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        buttonView.getTag();
-                        cb.setTextColor(getResources().getColor(R.color.Green));
-                    }
-                }
-            });
-            ll.addView(cb);
-        }
-
-        Button button = new Button(this);
-        button.setText("Delete List");
-        button.setPadding(0, 10, 0, 10);
-        ll.addView(button);
+            setListItems();
+            generateList();
+        }else
+            System.out.println("ERROR: NO EXTRAS");
     }
 
 
@@ -79,5 +67,35 @@ public class SelectedList extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setListItems(){
+        DBhelper db = new DBhelper(this);
+        listItems = db.getAllItems(listId);
+    }
+
+    public void generateList(){
+        LinearLayout ll = (LinearLayout)findViewById(R.id.expandableLinear);
+        for(int i = 0; i <listItems.size(); i++) {
+            final CheckBox cb = new CheckBox(this);
+            cb.setText(listItems.get(i).getName());
+            cb.setTag("checkbox" + i);
+            cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        buttonView.getTag();
+                        cb.setTextColor(getResources().getColor(R.color.Green));
+                    }
+                }
+            });
+            ll.addView(cb);
+        }
+
+        Button button = new Button(this);
+        button.setText("Delete List");
+        button.setPadding(0, 10, 0, 10);
+        ll.addView(button);
     }
 }

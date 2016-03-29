@@ -12,6 +12,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,39 +21,19 @@ import java.util.HashMap;
 public class ShoppingLists extends ListActivity {
 
     public ArrayList<HashMap<String, String>> lists;
+    public ArrayList<List> allLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_lists);
 
-        DBhelper db = new DBhelper(this);
-        ArrayList<List> allLists = db.getAllLists();
-        lists = new ArrayList<HashMap<String, String>>();
-
-        System.out.println("SIZE OF LIST: " + allLists.size());
-
-        for(int i=0; i<allLists.size(); i++) {
-            HashMap<String, String> listMap = new HashMap<String, String>();
-            listMap.put("name",allLists.get(i).getName());
-            listMap.put("date","Date Created: " + allLists.get(i).getDate());
-            listMap.put("id","List ID: " + allLists.get(i).getId());
-           // listMap.put("readyInMinutes", ready);
-            // adding contact to contact list
-            lists.add(listMap);
-        }
-
-        ListAdapter adapter = new SimpleAdapter(
-                ShoppingLists.this, lists,
-                R.layout.list_shopping, new String[] { "name", "date", "id"}, new int[] { R.id.name,
-                R.id.date,R.id.id});
-        setListAdapter(adapter);
+        setLists();
+        generateListMap();
+        generateListView();
 
         ListView lv = getListView();
-
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // getting values from selected ListItem
@@ -87,5 +68,37 @@ public class ShoppingLists extends ListActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setLists(){
+        DBhelper db = new DBhelper(this);
+        allLists = db.getAllLists();
+        if(allLists.size()==0)
+        {
+            Toast.makeText(this, "No Lists Created",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void generateListMap(){
+        lists = new ArrayList<HashMap<String, String>>();
+        for(int i=0; i<allLists.size(); i++) {
+            HashMap<String, String> listMap = new HashMap<String, String>();
+            listMap.put("name",allLists.get(i).getName());
+            listMap.put("date","Date Created: " + allLists.get(i).getDate());
+            listMap.put("id","List ID: " + allLists.get(i).getId());
+            // listMap.put("readyInMinutes", ready);
+            // adding contact to contact list
+            lists.add(listMap);
+        }
+    }
+
+    public void generateListView(){
+        ListAdapter adapter = new SimpleAdapter(
+                ShoppingLists.this, lists,
+                R.layout.list_shopping, new String[] { "name", "date", "id"}, new int[] { R.id.name,
+                R.id.date,R.id.id});
+        setListAdapter(adapter);
     }
 }

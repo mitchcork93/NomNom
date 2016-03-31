@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class GetRecipes extends ListActivity {
@@ -44,55 +45,60 @@ public class GetRecipes extends ListActivity {
     public String amount = "";
     public Recipe selectedRecipe;
     public String api;
-    public int numberOfRecipes = 100;
+    public int numberOfRecipes = 50;
     public JSONArray recipeList = null;
     public JSONArray ingredientsList = null;
     public JSONArray nutrientsList = null;
     public String responseBody;
-    public ArrayList<HashMap<String, String>> recipes;
+    public ArrayList<String> title;
+    public ArrayList<String> recipeId;
+    public ArrayList<String> cookingTime;
     public ArrayList<String> imageURLS = new ArrayList<String>();
     public String foodType;
+    public ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_recipes);
 
+        listView = (ListView) findViewById(android.R.id.list);
+
+        Random random = new Random();
+
+        // generate a random integer from 0 to 899,
+       // int rand = random.nextInt(100);
+        int rand = 0;
+       // System.out.println("RAND: " + rand);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if(extras.getString("ingredients") != null)
             {
                 String list = extras.getString("ingredients");
-                System.out.println(list);
                 api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=" + list + "&limitLicense=true";
             }
             else {
                 foodType = extras.getString("id");
-                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="+ foodType + "&number=" + numberOfRecipes + "&limitLicense=true";
+                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="+ foodType + "&number=" + numberOfRecipes + "&offset=" + rand + "&limitLicense=true";
             }
-            recipes = new ArrayList<HashMap<String, String>>();
-            ListView lv = getListView();
 
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    // getting values from selected ListItem
-                    String ids = ((TextView) view.findViewById(R.id.name)).getText().toString();
-                    String title = ((TextView) view.findViewById(R.id.email)).getText().toString();
-                    String readyIn = ((TextView) view.findViewById(R.id.mobile)).getText().toString();
+                public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                    ListItem newsData = (ListItem) listView.getItemAtPosition(position);
 
-                    selectedRecipe = new Recipe(ids,title,readyIn,null,imageURLS.get(position));
+                    String ids = ((TextView)listView.findViewById(R.id.date)).getText().toString();
+                    String title = ((TextView)listView.findViewById(R.id.title)).getText().toString();
+                    String readyIn = ((TextView) listView.findViewById(R.id.reporter)).getText().toString();
+                    String filteredId = ids.substring(11); // Removes label
+
+                    selectedRecipe = new Recipe(filteredId,title,readyIn,null,imageURLS.get(position));
 
                     new Ingredients().execute();
-
-                  //  https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/{id}/information
-
                 }
             });
-
             // Calling async task to get json
             new GetRecipe().execute();
         }
@@ -125,7 +131,7 @@ public class GetRecipes extends ListActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Showing progress dialog
+            /* Showing progress dialog*/
             pDialog = new ProgressDialog(GetRecipes.this);
             pDialog.setMessage("Getting Recipes! ....");
             pDialog.setCancelable(false);
@@ -153,28 +159,21 @@ public class GetRecipes extends ListActivity {
                 try {
                     // Getting JSON Array node
                     recipeList = jsonObj.getJSONArray("results");
+                    title = new ArrayList<String>();
+                    cookingTime = new ArrayList<String>();
+                    recipeId = new ArrayList<String>();
 
-                    // looping through All Contacts
                     for (int i = 0; i < recipeList.length(); i++) {
                         JSONObject c = recipeList.getJSONObject(i);
                         try {
-                            int t = Integer.parseInt(c.getString("readyInMinutes"));
-
                              String id = c.getString("id");
                              String name = c.getString("title");
                              String ready = c.getString("readyInMinutes");
                              imageURLS.add(c.getString("image"));
 
-                                // tmp hashmap for single contact
-                             HashMap<String, String> contact = new HashMap<String, String>();
-
-                                // adding each child node to HashMap key => value
-                             contact.put("id", id);
-                             contact.put("title", name);
-                             contact.put("readyInMinutes", ready);
-
-                                // adding contact to contact list
-                             recipes.add(contact);
+                             title.add(name);
+                            cookingTime.add(ready);
+                            recipeId.add(id);
 
                         }catch (Exception e){e.printStackTrace(); System.out.println("ohh dear...");}
 
@@ -185,25 +184,20 @@ public class GetRecipes extends ListActivity {
             } else {
                 try {
                     recipeList = new JSONArray(responseBody);
+                    title = new ArrayList<String>();
+                    cookingTime = new ArrayList<String>();
+                    recipeId = new ArrayList<String>();
 
                     for (int i = 0; i < recipeList.length(); i++) {
                         JSONObject c = recipeList.getJSONObject(i);
 
                             String id = c.getString("id");
                             String name = c.getString("title");
+
                             imageURLS.add(c.getString("image"));
-
-                            // tmp hashmap for single contact
-                            HashMap<String, String> contact = new HashMap<String, String>();
-
-                            // adding each child node to HashMap key => value
-                            contact.put("id", id);
-                            contact.put("title", name);
-                            contact.put("readyInMinutes", "10");
-
-                            // adding contact to contact list
-                            recipes.add(contact);
-
+                            title.add(name);
+                            cookingTime.add("20");
+                            recipeId.add(id);
                         }
 
                 }catch (Exception e){e.printStackTrace();}
@@ -219,16 +213,9 @@ public class GetRecipes extends ListActivity {
             // Dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    GetRecipes.this, recipes,
-                    R.layout.list_item, new String[] { "id", "title",
-                    "readyInMinutes" }, new int[] { R.id.name,
-                    R.id.email, R.id.mobile });
 
-            setListAdapter(adapter);
+            ArrayList<ListItem> listData = getListData();
+            listView.setAdapter(new CustomListAdapter(getApplication(),listData));
         }
 
     }
@@ -240,7 +227,7 @@ public class GetRecipes extends ListActivity {
             super.onPreExecute();
             // Showing progress dialog
             pDialog = new ProgressDialog(GetRecipes.this);
-            pDialog.setMessage("Getting instructions....");
+            pDialog.setMessage("Getting Instructions....");
             pDialog.setCancelable(false);
             pDialog.show();
         }
@@ -291,7 +278,6 @@ public class GetRecipes extends ListActivity {
             in.putExtra("instructions",selectedRecipe.getInstructions());
             in.putExtra("ingredients",ingredients);
             in.putExtra("nutrients",nutrients);
-            System.out.println("PUTTING: " + units);
             in.putExtra("units",units);
             in.putExtra("amount",amount);
             startActivity(in);
@@ -334,7 +320,6 @@ public class GetRecipes extends ListActivity {
                 try {
                     // Getting JSON Array node
                     ingredientsList = jsonObj.getJSONArray("extendedIngredients");
-                    System.out.println("Investigate: " + jsonObj.toString());
                   //  nutrientsList = jsonObj.getJSONArray("nutrients");
 
                     // looping through All Contacts
@@ -351,7 +336,6 @@ public class GetRecipes extends ListActivity {
                     }
 
                         JSONObject nut = jsonObj.getJSONObject("nutrition");
-                        System.out.println("Nutlist: " + nut.toString());
                         nutrientsList = nut.getJSONArray("nutrients");
 
                         for(int y=0; y<nutrientsList.length(); y++)
@@ -359,7 +343,6 @@ public class GetRecipes extends ListActivity {
                             JSONObject o = nutrientsList.getJSONObject(y);
                             try {
                                 nutrients += o.getString("title") +",";
-                                System.out.println("ADDING: " + o.getString("unit"));
                                 String checker = o.getString("unit");
                                 if(checker.equalsIgnoreCase("Âµg"))
                                     units += "µg" + ",";
@@ -369,7 +352,6 @@ public class GetRecipes extends ListActivity {
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                System.out.println("ohh dear...");
                             }
                         }
 
@@ -391,11 +373,30 @@ public class GetRecipes extends ListActivity {
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            System.out.println("INGREDIENTS: " + ingredients);
-
             new Instructions().execute();
 
         }
+    }
+
+    private ArrayList<ListItem> getListData() {
+        ArrayList<ListItem> listMockData = new ArrayList<ListItem>();
+
+        for (int i = 0; i < imageURLS.size(); i++) {
+            ListItem newsData = new ListItem();
+
+            String link = imageURLS.get(i);
+
+            if (!link.substring(0, 4).equalsIgnoreCase("http"))
+                link = "https://spoonacular.com/recipeImages/" + imageURLS.get(i);
+
+            newsData.setUrl(link);
+            newsData.setHeadline(title.get(i));
+            newsData.setReporterName(cookingTime.get(i));
+            newsData.setDate("Recipe ID: " + recipeId.get(i));
+            listMockData.add(newsData);
+        }
+
+        return listMockData;
     }
 
 }

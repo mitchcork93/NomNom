@@ -1348,24 +1348,25 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02003f;
         public static final int ingredients=0x7f020040;
         public static final int ingredients_active=0x7f020041;
-        public static final int question_image=0x7f020042;
-        public static final int recipe=0x7f020043;
-        public static final int recipe_active=0x7f020044;
-        public static final int recipe_tabs_selector_ingredients=0x7f020045;
-        public static final int recipe_tabs_selector_recipe=0x7f020046;
-        public static final int recipe_tabs_selector_summary=0x7f020047;
-        public static final int red_meat=0x7f020048;
-        public static final int red_meat_pressed=0x7f020049;
-        public static final int red_meat_selector=0x7f02004a;
-        public static final int seafood=0x7f02004b;
-        public static final int seafood_pressed=0x7f02004c;
-        public static final int seafood_selector=0x7f02004d;
-        public static final int search_icon=0x7f02004e;
-        public static final int summary=0x7f02004f;
-        public static final int summary_active=0x7f020050;
-        public static final int veggie=0x7f020051;
-        public static final int veggie_pressed=0x7f020052;
-        public static final int veggie_selector=0x7f020053;
+        public static final int placeholder=0x7f020042;
+        public static final int question_image=0x7f020043;
+        public static final int recipe=0x7f020044;
+        public static final int recipe_active=0x7f020045;
+        public static final int recipe_tabs_selector_ingredients=0x7f020046;
+        public static final int recipe_tabs_selector_recipe=0x7f020047;
+        public static final int recipe_tabs_selector_summary=0x7f020048;
+        public static final int red_meat=0x7f020049;
+        public static final int red_meat_pressed=0x7f02004a;
+        public static final int red_meat_selector=0x7f02004b;
+        public static final int seafood=0x7f02004c;
+        public static final int seafood_pressed=0x7f02004d;
+        public static final int seafood_selector=0x7f02004e;
+        public static final int search_icon=0x7f02004f;
+        public static final int summary=0x7f020050;
+        public static final int summary_active=0x7f020051;
+        public static final int veggie=0x7f020052;
+        public static final int veggie_pressed=0x7f020053;
+        public static final int veggie_selector=0x7f020054;
     }
     public static final class id {
         public static final int action_bar=0x7f080031;
@@ -1403,7 +1404,6 @@ containing a value of this type.
         public static final int disableHome=0x7f08000c;
         public static final int dropdown=0x7f08001c;
         public static final int edit_query=0x7f080033;
-        public static final int email=0x7f080060;
         public static final int end=0x7f080014;
         public static final int expand_activities_button=0x7f080022;
         public static final int expandableLinear=0x7f080058;
@@ -1423,7 +1423,6 @@ containing a value of this type.
         public static final int list_item=0x7f080025;
         public static final int main=0x7f08003f;
         public static final int middle=0x7f080015;
-        public static final int mobile=0x7f080061;
         public static final int myActionEditText=0x7f080065;
         public static final int myActionTextView=0x7f080064;
         public static final int name=0x7f080055;
@@ -1435,6 +1434,7 @@ containing a value of this type.
         public static final int question=0x7f080053;
         public static final int radio=0x7f08002b;
         public static final int radioButton=0x7f08005f;
+        public static final int reporter=0x7f080061;
         public static final int scrollView=0x7f080057;
         public static final int seafood=0x7f080046;
         public static final int search_badge=0x7f080035;
@@ -1468,6 +1468,7 @@ containing a value of this type.
         public static final int textView7=0x7f080050;
         public static final int textView8=0x7f08004e;
         public static final int textView9=0x7f080056;
+        public static final int thumbImage=0x7f080060;
         public static final int title=0x7f080027;
         public static final int up=0x7f080008;
         public static final int useLogo=0x7f080012;
@@ -1510,12 +1511,13 @@ containing a value of this type.
         public static final int activity_shopping_lists=0x7f03001c;
         public static final int ingredients_list=0x7f03001d;
         public static final int list_item=0x7f03001e;
-        public static final int list_shopping=0x7f03001f;
-        public static final int search_action=0x7f030020;
-        public static final int support_simple_spinner_dropdown_item=0x7f030021;
-        public static final int tab_one=0x7f030022;
-        public static final int tab_three=0x7f030023;
-        public static final int tab_two=0x7f030024;
+        public static final int list_row_layout=0x7f03001f;
+        public static final int list_shopping=0x7f030020;
+        public static final int search_action=0x7f030021;
+        public static final int support_simple_spinner_dropdown_item=0x7f030022;
+        public static final int tab_one=0x7f030023;
+        public static final int tab_three=0x7f030024;
+        public static final int tab_two=0x7f030025;
     }
     public static final class menu {
         public static final int menu_get_recipes=0x7f0c0000;

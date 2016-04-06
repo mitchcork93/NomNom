@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void shoppingList(View v){
+    public void shoppingList(MenuItem v){
         Intent intent = new Intent(getBaseContext(), ShoppingLists.class);
         startActivity(intent);
     }

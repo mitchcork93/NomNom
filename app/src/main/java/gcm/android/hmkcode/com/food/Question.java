@@ -1,6 +1,8 @@
 package gcm.android.hmkcode.com.food;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -24,12 +26,13 @@ public class Question extends ActionBarActivity {
     String api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/quickAnswer?";
     private String question;
     private String answer;
+    final Context context = this;
     private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+        setContentView(R.layout.activity_main);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -115,8 +118,10 @@ public class Question extends ActionBarActivity {
             if (pDialog.isShowing())
                 pDialog.dismiss();
 
-            TextView text = (TextView)findViewById(R.id.answer);
-            text.setText(answer);
+            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            alert.setMessage(answer);
+            alert.setPositiveButton("OK", null);
+            alert.show();
         }
 
     }

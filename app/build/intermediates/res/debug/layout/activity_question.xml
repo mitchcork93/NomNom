@@ -7,24 +7,7 @@
     tools:context="gcm.android.hmkcode.com.food.Question"
     android:id="@+id/layout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Answer"
-        android:id="@+id/question"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/answer"
-        android:layout_below="@+id/question"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp" />
 
 </RelativeLayout>
 <!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/layout/activity_question.xml -->

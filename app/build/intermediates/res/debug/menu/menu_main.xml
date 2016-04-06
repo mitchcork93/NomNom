@@ -9,4 +9,11 @@
         android:title="@string/ask_question"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item
+        android:id="@+id/shopping_list"
+        android:icon="@drawable/action_bar_shopping_list"
+        android:title="shopping_list"
+        android:onClick="shoppingList"
+        app:showAsAction="ifRoom|collapseActionView"
+        />
 </menu><!-- From: file:/C:/Users/mitch/AndroidStudioProjects/Food/app/src/main/res/menu/menu_main.xml -->

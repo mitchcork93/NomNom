@@ -107,7 +107,7 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Junk"
+        android:text="Burgers"
         android:id="@+id/textView4"
         android:gravity="center"
         android:textStyle="bold"
@@ -134,15 +134,16 @@
         android:id="@+id/textView5"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/vegetable" />
+        android:layout_above="@+id/vegetable"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ingredients"
         android:layout_below="@+id/textView8"
-        android:layout_alignStart="@+id/button2"
-        android:layout_alignEnd="@+id/textView5" />
+        android:layout_alignStart="@+id/textView8"
+        android:layout_alignEnd="@+id/textView8" />
 
     <Button
         android:layout_width="wrap_content"
@@ -151,9 +152,10 @@
         android:id="@+id/button2"
         android:onClick="findByIngredients"
         android:background="@drawable/button1"
-        android:textColor="#D3D3D3"
+        android:textColor="#ffffff"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/ingredients"
+        android:layout_alignEnd="@+id/ingredients" />
 
 
     <TextView
@@ -181,17 +183,11 @@
         android:text="Find by Ingredients"
         android:id="@+id/textView8"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="41dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/textView6"
+        android:layout_toStartOf="@+id/seafood" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shopping Lists"
-        android:id="@+id/button3"
-        android:onClick="shoppingList"
-        android:layout_alignTop="@+id/button2"
-        android:layout_toStartOf="@+id/textView5" />
+
 
 </RelativeLayout>

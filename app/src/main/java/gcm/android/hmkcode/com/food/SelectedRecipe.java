@@ -46,10 +46,6 @@ public class SelectedRecipe extends ActionBarActivity {
             amount = extras.getString("amount");
             units = extras.getString("units");
 
-            System.out.println("SELECTEDRECIPE NUT: " + nutrients);
-            System.out.println("SELECTEDRECIPE AMO: " + amount);
-            System.out.println("SELECTEDRECIPE UNI: " + units);
-
             recipe = new Recipe(extras.getString("id"), extras.getString("title"), extras.getString("ready"), SelectedRecipe.this, imageLink);
             recipe.setInstructions(extras.getString("instructions"));
             recipe.getImage();

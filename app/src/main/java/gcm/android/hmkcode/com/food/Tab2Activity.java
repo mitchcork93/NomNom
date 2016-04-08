@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.InputType;
@@ -51,16 +52,10 @@ public class Tab2Activity extends Fragment {
         checkboxes = new ArrayList<CheckBox>();
 
         LinearLayout l = (LinearLayout)inflater.inflate(R.layout.tab_two, container, false);
-       // RelativeLayout s = (RelativeLayout)inflater.inflate(R.layout.tab_two, container, false);
-       // RelativeLayout r = (RelativeLayout)s.findViewById(R.layout.text);
 
         Bundle b = getArguments();
         String ingredientsString = b.getString("ingredients");
-
-        System.out.println("string: " + ingredientsString);
         String[] ingredients = ingredientsString.split(",");
-
-        System.out.println("size: " + ingredients.length);
 
         ScrollView sv = new ScrollView(getActivity());
         LinearLayout ll = new LinearLayout(getActivity());
@@ -75,11 +70,11 @@ public class Tab2Activity extends Fragment {
 
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
+                    if (isChecked) { // If the checkbox is ticked
                         buttonView.getTag();
-                        shoppingList.add(cb.getText().toString());
-                    } else {
-                        shoppingList.remove(cb.getText().toString());
+                        shoppingList.add(cb.getText().toString()); // add the item to list
+                    } else { // Item is unticked
+                        shoppingList.remove(cb.getText().toString()); // remove item from list
                     }
 
                 }
@@ -89,13 +84,15 @@ public class Tab2Activity extends Fragment {
         Button button = new Button(getActivity());
         button.setText("Add to list");
         button.setPadding(0, 10, 0, 10);
+        button.setBackgroundColor(Color.parseColor("#49B99F"));
+        button.setTextColor(Color.parseColor("#FFFFFF"));
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String list = "";
 
-                for (int x=0; x<shoppingList.size(); x++)
+                for (int x = 0; x < shoppingList.size(); x++)
                     list += shoppingList.get(x) + "\n";
 
                 final EditText input = new EditText(getActivity());
@@ -123,16 +120,6 @@ public class Tab2Activity extends Fragment {
                                     for (int y = 0; y < shoppingList.size(); y++)
                                         db.insertDataItem(shoppingList.get(y), listId);
 
-                                    /* USED FOR TESTING
-                                    List test = db.getList(listId);
-                                    System.out.println("Latest List Info\nName: " + test.getName() + "\n" + "ID: " + test.getId() + "\n" + "Date: " + test.getDate());
-                                    ArrayList<Item> allItems = db.getAllItems(listId);
-                                    for(int i=0; i<allItems.size(); i++)
-                                        System.out.println("Latest Items Info\nName: " + allItems.get(i).getName() + "\n" + "ID: " + allItems.get(i).getId() + "\n" + "ListID: " + allItems.get(i).getListId());
-
-                                    ArrayList<List> allLists = db.getAllLists();
-                                    for(int i=0; i<allLists.size(); i++)
-                                        System.out.println("List " + i + "Info\nName: " + allLists.get(i).getName() + "\n" + "ID: " + allLists.get(i).getId() + "\n" + "Date: " + allLists.get(i).getDate());*/
                                     Toast.makeText(getActivity(), "List Created!",
                                             Toast.LENGTH_LONG).show();
 

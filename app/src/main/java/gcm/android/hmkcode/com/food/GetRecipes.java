@@ -73,14 +73,16 @@ public class GetRecipes extends ListActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            if(extras.getString("ingredients") != null)
+            if(extras.getString("ingredients") != null) // get the ingredients from the tex tline.
             {
                 String list = extras.getString("ingredients");
-                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=" + list + "&limitLicense=true";
+                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?ingredients=" +
+                        list + "&limitLicense=true";
             }
-            else {
+            else { // Is when one of DA  buttons are pressed
                 foodType = extras.getString("id");
-                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="+ foodType + "&number=" + numberOfRecipes + "&offset=" + rand + "&limitLicense=true";
+                api = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="+ foodType
+                        + "&number=" + numberOfRecipes + "&offset=" + rand + "&limitLicense=true";
             }
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -331,7 +333,6 @@ public class GetRecipes extends ListActivity {
 
                         } catch (Exception e) {
                             e.printStackTrace();
-                            System.out.println("ohh dear...");
                         }
                     }
 
@@ -379,7 +380,7 @@ public class GetRecipes extends ListActivity {
     }
 
     private ArrayList<ListItem> getListData() {
-        ArrayList<ListItem> listMockData = new ArrayList<ListItem>();
+        ArrayList<ListItem> listData = new ArrayList<ListItem>();
 
         for (int i = 0; i < imageURLS.size(); i++) {
             ListItem newsData = new ListItem();
@@ -393,10 +394,10 @@ public class GetRecipes extends ListActivity {
             newsData.setHeadline(title.get(i));
             newsData.setReporterName(cookingTime.get(i));
             newsData.setDate("Recipe ID: " + recipeId.get(i));
-            listMockData.add(newsData);
+            listData.add(newsData);
         }
 
-        return listMockData;
+        return listData;
     }
 
 }

@@ -1,5 +1,6 @@
 package gcm.android.hmkcode.com.food;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -96,6 +97,8 @@ public class SelectedList extends ActionBarActivity {
         Button button = new Button(this);
         button.setText("Delete List");
         button.setPadding(0, 10, 0, 10);
+        button.setBackgroundColor(Color.parseColor("#49B99F"));
+        button.setTextColor(Color.parseColor("#FFFFFF"));
         ll.addView(button);
     }
 }

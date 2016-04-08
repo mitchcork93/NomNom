@@ -21,6 +21,7 @@
         android:layout_toRightOf="@id/thumbImage"
         android:minLines="2"
         android:paddingTop="5dp"
+        android:textColor="@color/Green"
         android:textStyle="bold" />
 
     <TextView
